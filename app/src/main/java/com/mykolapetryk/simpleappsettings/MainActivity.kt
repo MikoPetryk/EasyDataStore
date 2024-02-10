@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mykolapetryk.easydatastore.DataStore
-import com.mykolapetryk.easydatastore.SettingValue
 import com.mykolapetryk.easydatastore.DataStoreValues
+import com.mykolapetryk.easydatastore.DataStoreValue
 import com.mykolapetryk.simpleappsettings.presentation.BooleanShowcase
 import com.mykolapetryk.simpleappsettings.presentation.NumberShowcase
 import com.mykolapetryk.simpleappsettings.presentation.RestartAppButton
@@ -32,7 +32,7 @@ object SavedValues : DataStoreValues() {
 
     // key - is value that used for finding data internally
     // It should be unique for each value that needs to be saved
-    val stringExample = SettingValue(
+    val stringExample = DataStoreValue(
         key = "simple-saved-string",
         default = "String"
     )
@@ -41,23 +41,23 @@ object SavedValues : DataStoreValues() {
 object Examples : DataStoreValues() {
 
     // Declaring different types of values with their keys and defaults
-    val booleanExample = SettingValue(
+    val booleanExample = DataStoreValue(
         key = "boolean-example",
         default = true
     )
-    val intExample = SettingValue(
+    val intExample = DataStoreValue(
         key = "int-example",
         default = 1
     )
-    val floatExample = SettingValue(
+    val floatExample = DataStoreValue(
         key = "float-example",
         default = 1f
     )
-    val longExample = SettingValue(
+    val longExample = DataStoreValue(
         key = "long-example",
         default = 1L
     )
-    val stringExample = SettingValue(
+    val stringExample = DataStoreValue(
         key = "string-example",
         default = "String"
     )

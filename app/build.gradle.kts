@@ -56,6 +56,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-
-    implementation(project(":EasyDataStore"))
+    implementation("com.github.mikopetryk:EasyDataStore:1.0.1")
+    //implementation(project(":EasyDataStore"))
 }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 object DataStore {
     private lateinit var values: Map<String, SettingsValues>
 
-    operator fun invoke(key: SettingValue<Boolean>): BooleanSettingsData {
+    operator fun invoke(key: DataStoreValue<Boolean>): BooleanSettingsData {
         try {
             return values[key.dataStoreName]?.fields?.get(key.key) as BooleanSettingsData
         } catch (e: NullPointerException) {
@@ -14,7 +14,7 @@ object DataStore {
         }
     }
 
-    operator fun invoke(key: SettingValue<Int>): IntSettingsData {
+    operator fun invoke(key: DataStoreValue<Int>): IntSettingsData {
         try {
             return values[key.dataStoreName]?.fields?.get(key.key) as IntSettingsData
         } catch (e: NullPointerException) {
@@ -22,7 +22,7 @@ object DataStore {
         }
     }
 
-    operator fun invoke(key: SettingValue<Float>): FloatSettingsData {
+    operator fun invoke(key: DataStoreValue<Float>): FloatSettingsData {
         try {
             return values[key.dataStoreName]?.fields?.get(key.key) as FloatSettingsData
         } catch (e: NullPointerException) {
@@ -30,7 +30,7 @@ object DataStore {
         }
     }
 
-    operator fun invoke(key: SettingValue<String>): StringSettingsData {
+    operator fun invoke(key: DataStoreValue<String>): StringSettingsData {
         try {
             return values[key.dataStoreName]?.fields?.get(key.key) as StringSettingsData
         } catch (e: NullPointerException) {
@@ -38,7 +38,7 @@ object DataStore {
         }
     }
 
-    operator fun invoke(key: SettingValue<Long>): LongSettingsData {
+    operator fun invoke(key: DataStoreValue<Long>): LongSettingsData {
         try {
             return values[key.dataStoreName]?.fields?.get(key.key) as LongSettingsData
         } catch (e: NullPointerException) {

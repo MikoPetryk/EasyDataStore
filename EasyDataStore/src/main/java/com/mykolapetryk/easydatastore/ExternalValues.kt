@@ -7,13 +7,13 @@ abstract class DataStoreValues {
 
     internal fun initDataStoreName(name: String) {
         val fields = this.javaClass.kotlin.memberProperties.map { it.get(this) }
-            .filterIsInstance<SettingValue<*>>()
+            .filterIsInstance<DataStoreValue<*>>()
         fields.forEach { it.init(name) }
     }
 
-    internal fun toList(): List<SettingValue<*>> {
+    internal fun toList(): List<DataStoreValue<*>> {
         val fields = this.javaClass.kotlin.memberProperties.map { it.get(this) }.toList()
-        return fields.filterIsInstance<SettingValue<*>>()
+        return fields.filterIsInstance<DataStoreValue<*>>()
     }
 }
 
@@ -28,7 +28,7 @@ internal class SettingsValues(
     }
 }
 
-data class SettingValue<T: Any>(
+data class DataStoreValue<T: Any>(
     internal val default: T,
     internal val key: String
 ) {

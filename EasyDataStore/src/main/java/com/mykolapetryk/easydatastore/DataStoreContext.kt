@@ -8,7 +8,7 @@ class EasyDataStore: Application() {
     init { instance = this }
 
     companion object {
-        private var instance: EasyDataStore? = null
+        private var instance: Application? = null
 
         fun context() : Context {
             return instance!!.applicationContext
