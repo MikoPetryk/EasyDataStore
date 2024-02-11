@@ -29,7 +29,8 @@ dependencyResolutionManagement {
 Add the dependency below to your module's `build.gradle` file:
 ```gradle
 dependencies {
-    implementation 'com.github.MikoPetryk:EasyDataStore:1.0.1.2'
+    implementation 'com.github.MikoPetryk:EasyDataStore:$latest_version'
+    //implementation ("com.github.MikoPetryk:EasyDataStore:$latest_version") // If using Gradle DSL
 }
 ```
 ## Usage
