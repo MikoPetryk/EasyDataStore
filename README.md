@@ -67,32 +67,32 @@ class MainActivity : ComponentActivity() {
 ### Accessing values
 For access use `DataStore` object with passed value that is needed:
 ```kotlin
-val string = DataStore(SavedValues.stringExample)
+val string = DataStore(SavedValues.booleanExample)
 ```
 Then you can:
 - use `read()` or `readAsFlow()`  to read saved values
 ```kotlin
-DataStore(SavedValues.stringExample).read()
-DataStore(SavedValues.stringExample).readAsFlow().collectAsState(initial = false)
+DataStore(SavedValues.booleanExample).read()
+DataStore(SavedValues.booleanExample).readAsFlow().collectAsState(initial = false)
 ```
 - use `update()` for `Synchronously` save new value:
 ```
-DataStore(SavedValues.stringExample).update(false)
+DataStore(SavedValues.booleanExample).update(false)
 ```
 or `updateAsync()` for `Asynchronously` save new value from `Coroutine`:
 ```
 val scope = rememberCoroutineScope()
 
 scope.launch {
-    DataStore(SavedValues.stringExample).updateAsync(false)
+    DataStore(SavedValues.booleanExample).updateAsync(false)
 }
 ```
 - Exclusively for boolean values there is additional functions - `updateInverted()` and `updateInvertedAsync()` which reverses value of boolean.
 - use `reset()` or `resetAsync()` to revert saved value to default:
 ```kotlin
-DataStore(SavedValues.stringExample).reset()
+DataStore(SavedValues.booleanExample).reset()
 scope.launch {
-    DataStore(SavedValues.stringExample).updateAsync(false)
+    DataStore(SavedValues.booleanExample).resetAsync()
 }
 ```
 
