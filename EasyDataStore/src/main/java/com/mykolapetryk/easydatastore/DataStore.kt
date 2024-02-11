@@ -1,5 +1,6 @@
 package com.mykolapetryk.easydatastore
 
+import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -73,7 +74,7 @@ object DataStore {
             data.initDataStoreName(data.dataStoreName)
 
             data.dataStoreName to SettingsValues(
-                settings = InternalDataStore(EasyDataStore.context(), data.dataStoreName),
+                settings = InternalDataStore(EasyDataStore.getContext(), data.dataStoreName),
                 storeObject = data
             )
         }
