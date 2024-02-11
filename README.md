@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 ```
-###Accessing values
+### Accessing values
 For access use `DataStore` object with passed value that is needed:
 ```kotlin
 val string = DataStore(SavedValues.stringExample)
