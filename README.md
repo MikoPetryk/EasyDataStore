@@ -1,9 +1,8 @@
 <h1 align="center">EasyDataStore</h1><br>
 
 <p align="center">
-[![](https://jitpack.io/v/MikoPetryk/EasyDataStore.svg)](https://jitpack.io/#MikoPetryk/EasyDataStore)
-[![](https://img.shields.io/badge/Github-Miko%20Petryk-blue
-)](https://github.com/MikoPetryk)
+	<a href="https://jitpack.io/#MikoPetryk/EasyDataStore/1.0.1.2"><img alt="jitpack" src="https://jitpack.io/v/MikoPetryk/EasyDataStore.svg"/></a>
+	<a href="https://github.com/MikoPetryk"><img alt="github" src="https://img.shields.io/badge/Github-Miko%20Petryk-blue"/></a>
 </p>
 
 
@@ -13,7 +12,7 @@ With EasyDataStore, you can easily define, access, and modify your settings valu
 </p>
 
 ## Download
-[![](https://jitpack.io/v/MikoPetryk/EasyDataStore.svg)](https://jitpack.io/#MikoPetryk/EasyDataStore)<br>
+[![](https://jitpack.io/v/MikoPetryk/EasyDataStore.svg)](https://jitpack.io/#MikoPetryk/EasyDataStore/1.0.1.2)<br>
 
 ### Gradle
 Add a repository in your `settings.gradle` file:
