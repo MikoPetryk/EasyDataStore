@@ -37,15 +37,15 @@ dependencies {
 Create `object` that extends `DataStoreValues` class and create values needed to be saved.
 ```kotlin
 object SavedValues : DataStoreValues() {
- val stringExample = DataStoreValue(
-  key = "string-example",
-  default = "String"
-)
- ...
- val booleanExample = DataStoreValue(
-  key = "boolean-example",
-  default = true
- )
+	val stringExample = DataStoreValue(
+		key = "string-example",
+		default = "String"
+	)
+	...
+	val booleanExample = DataStoreValue(
+		key = "boolean-example",
+		default = true
+	)
 }
 ```
 
