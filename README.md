@@ -80,7 +80,7 @@ DataStore(SavedValues.booleanExample).readAsFlow().collectAsState(initial = fals
 DataStore(SavedValues.booleanExample).update(false)
 ```
 or `updateAsync()` for `Asynchronously` save new value from `Coroutine`:
-```
+```kotlin
 val scope = rememberCoroutineScope()
 
 scope.launch {
