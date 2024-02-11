@@ -87,7 +87,7 @@ scope.launch {
     DataStore(SavedValues.booleanExample).updateAsync(false)
 }
 ```
-- Exclusively for boolean values there is additional functions - `updateInverted()` and `updateInvertedAsync()` which reverses value of boolean.
+- Exclusively for `boolean values` there are additional functions: `updateInverted()` and `updateInvertedAsync()` which reverses value of boolean.
 - use `reset()` or `resetAsync()` to revert saved value to default:
 ```kotlin
 DataStore(SavedValues.booleanExample).reset()
