@@ -18,18 +18,18 @@ With EasyDataStore, you can easily define, access, and modify your settings valu
 Add a repository in your `settings.gradle` file:
 ```gradle
 dependencyResolutionManagement {
- repositories {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-  ...
-  maven(url = "https://jitpack.io")
-  //maven { setUrl("https://jitpack.io") }	// If using settings.gradle.kts
- }
+    repositories {
+        repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+        ...
+        maven(url = "https://jitpack.io")
+        //maven { setUrl("https://jitpack.io") }	// If using settings.gradle.kts
+    }
 }
 ```
 Add the dependency below to your module's `build.gradle` file:
 ```gradle
 dependencies {
- implementation 'com.github.MikoPetryk:EasyDataStore:1.0.1.2'
+    implementation 'com.github.MikoPetryk:EasyDataStore:1.0.1.2'
 }
 ```
 ## Usage
@@ -37,30 +37,30 @@ dependencies {
 Create `object` that extends `DataStoreValues` class and create values needed to be saved.
 ```kotlin
 object SavedValues : DataStoreValues() {
-	val stringExample = DataStoreValue(
-		key = "string-example",
-		default = "String"
-	)
-	...
-	val booleanExample = DataStoreValue(
-		key = "boolean-example",
-		default = true
-	)
+    val stringExample = DataStoreValue(
+        key = "string-example",
+        default = "String"
+    )
+    ...
+    val booleanExample = DataStoreValue(
+        key = "boolean-example",
+        default = true
+    )
 }
 ```
 
 Initialize `DataStore` with created `objects` inside `MainActivity` class like so:
 ```kotlin
 class MainActivity : ComponentActivity() {
- override fun onCreate(savedInstanceState: Bundle?) {
-  super.onCreate(savedInstanceState)
-  ...
-  DataStore.start(SavedValues, ..., AnotherValues) // Pass all objects you created
-  ...
-  setContent {
-   // Content here...
-  }
- }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ...
+        DataStore.start(SavedValues, ..., AnotherValues) // Pass all objects you created
+        ...
+        setContent {
+            // Content here...
+        }
+    }
 }
 ```
 ###Accessing values
@@ -83,7 +83,7 @@ or `updateAsync()` for `Asynchronously` save new value from `Coroutine`:
 val scope = rememberCoroutineScope()
 
 scope.launch {
- DataStore(SavedValues.stringExample).updateAsync(false)
+    DataStore(SavedValues.stringExample).updateAsync(false)
 }
 ```
 - Exclusively for boolean values there is additional functions - `updateInverted()` and `updateInvertedAsync()` which reverses value of boolean.
@@ -91,7 +91,7 @@ scope.launch {
 ```kotlin
 DataStore(SavedValues.stringExample).reset()
 scope.launch {
- DataStore(SavedValues.stringExample).updateAsync(false)
+    DataStore(SavedValues.stringExample).updateAsync(false)
 }
 ```
 
