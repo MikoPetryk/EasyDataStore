@@ -55,7 +55,7 @@ afterEvaluate {
 
                 groupId = "com.github.MikoPetryk"
                 artifactId = "EasyDataStore"
-                version = "1.0.0"
+                version = "1.0.1.2"
             }
         }
     }
