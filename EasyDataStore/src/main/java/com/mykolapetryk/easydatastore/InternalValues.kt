@@ -262,8 +262,9 @@ data class StringSetSettingsData(
     override val default: Set<String>
 ) : SettingsData<Set<String>>(settings, key, default) {
     fun read() = currentValue.value.toMutableSet()
-    fun readAsFlow(): Flow<Set<String>> =
-        settings.readAsFlow(this).mapNotNull { it.dataStoreToStringSet() }
+
+    fun readAsFlow(): Flow<MutableSet<String>> =
+        settings.readAsFlow(this).mapNotNull { it.dataStoreToMutableStringSet() }
 
     init {
         val data = this

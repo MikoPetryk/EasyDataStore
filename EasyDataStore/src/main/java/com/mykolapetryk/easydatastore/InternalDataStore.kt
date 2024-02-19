@@ -126,4 +126,8 @@ internal fun Any.dataStoreToStringSet() : Set<String> =
     (this as? ArrayList<*>)?.mapNotNull { it.toString() }?.toSet()
         ?: (this as Set<*>).mapNotNull { it.toString() }.toSet()
 
+internal fun Any.dataStoreToMutableStringSet() : MutableSet<String> =
+    (this as? ArrayList<*>)?.mapNotNull { it.toString() }?.toMutableSet()
+        ?: (this as Set<*>).mapNotNull { it.toString() }.toMutableSet()
+
 internal fun Any.toStringList() = (this as List<*>).mapNotNull { it.toString() }
