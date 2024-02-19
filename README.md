@@ -1,7 +1,7 @@
 <h1 align="center">EasyDataStore</h1><br>
 
 <p align="center">
-	<a href="https://jitpack.io/#MikoPetryk/EasyDataStore/1.0.1.2"><img alt="jitpack" src="https://jitpack.io/v/MikoPetryk/EasyDataStore.svg"/></a>
+	<a href="https://jitpack.io/#MikoPetryk/EasyDataStore/1.0.0-rc1"><img alt="jitpack" src="https://jitpack.io/v/MikoPetryk/EasyDataStore.svg"/></a>
 	<a href="https://github.com/MikoPetryk"><img alt="github" src="https://img.shields.io/badge/Github-Miko%20Petryk-blue"/></a>
 </p>
 
@@ -33,6 +33,58 @@ dependencies {
     //implementation ("com.github.MikoPetryk:EasyDataStore:$latest_version") // If using Gradle DSL
 }
 ```
+## Supported data types
+### Boolean
+```kotlin
+val booleanExample = DataStoreValue(
+    key = "boolean-example",
+    default = true
+)
+```
+### Integer
+```kotlin
+val intExample = DataStoreValue(
+    key = "int-example",
+    default = 1
+)
+```
+### Float
+```kotlin
+val floatExample = DataStoreValue(
+    key = "float-example",
+    default = 1f
+)
+```
+### Double
+```kotlin
+val doubleExample = DataStoreValue(
+    key = "double-example",
+    default = 1.0
+)
+```
+### Long
+```kotlin
+val longExample = DataStoreValue(
+    key = "long-example",
+    default = 1L
+)
+```
+### String
+```kotlin
+val stringExample = DataStoreValue(
+    key = "string-example",
+    default = "String"
+)
+```
+### StringSet
+When reading `StringSet` returns `MutableSet<String>` for ease of use.
+```kotlin
+val stringSetExample = DataStoreValue(
+    key = "string-set-example",
+    default = emptySet<String>()
+)
+```
+
 ## Usage
 ### Initialization
 Create `object` that extends `DataStoreValues` class and create values needed to be saved.
@@ -64,6 +116,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 ```
+
 ### Accessing values
 For access use `DataStore` object with passed value that is needed:
 ```kotlin
