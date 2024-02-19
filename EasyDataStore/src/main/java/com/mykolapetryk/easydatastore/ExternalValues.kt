@@ -57,6 +57,12 @@ data class DataStoreValue<T: Any>(
             default = default
         )
 
+        is Double -> DoubleSettingsData(
+            settings = settings,
+            key = key,
+            default = default
+        )
+
         is String -> StringSettingsData(
             settings = settings,
             key = key,
@@ -68,8 +74,15 @@ data class DataStoreValue<T: Any>(
             key = key,
             default = default as Long
         )
+
+        is Set<*> -> StringSetSettingsData(
+            settings = settings,
+            key = key,
+            default = default.toStringSet()
+        )
+
         else -> throw InvalidValueTypeException(
-            "[$key@$dataStoreName] Cannot save value type of ${default!!::class.simpleName}"
+            "[$key@$dataStoreName] Cannot save value type of ${default::class.simpleName}"
         )
     }
 }

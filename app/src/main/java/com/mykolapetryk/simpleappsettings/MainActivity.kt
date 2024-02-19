@@ -6,11 +6,21 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mykolapetryk.easydatastore.DataStore
 import com.mykolapetryk.easydatastore.DataStoreValue
@@ -36,6 +46,11 @@ object SavedValues : DataStoreValues() {
         key = "simple-saved-string",
         default = "String"
     )
+
+    val stringListExample = DataStoreValue(
+        key = "simple-saved-string-list",
+        default = emptySet<String>()
+    )
 }
 
 object Examples : DataStoreValues() {
@@ -57,6 +72,10 @@ object Examples : DataStoreValues() {
         key = "long-example",
         default = 1L
     )
+    val doubleExample = DataStoreValue(
+        key = "double-example",
+        default = 1.0
+    )
     val stringExample = DataStoreValue(
         key = "string-example",
         default = "String"
@@ -72,22 +91,43 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SimpleAppSettingsTheme(dynamicColor = false, darkTheme = false) {
-                Column(
+                val list by DataStore(SavedValues.stringListExample).readAsFlow().collectAsState(
+                    initial = emptyList()
+                )
+
+                LazyColumn(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
-                        .fillMaxSize()
-                        .padding(8.dp),
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    RestartAppButton(this@MainActivity, Modifier.weight(1f))
+                    item { RestartAppButton(this@MainActivity) }
 
-                    Spacer()
+                    item { Spacer() }
 
                     // Showcases of how to use DataStore with different types of values
-                    BooleanShowcase()  // Example of DataStore of Boolean
-                    NumberShowcase()  // Example of DataStore of Int, Float and Long
-                    StringShowcase()  // Example of DataStore of String
+                    item { BooleanShowcase() }  // Example of DataStore of Boolean
+                    item { NumberShowcase() }  // Example of DataStore of Int, Float and Long
+                    item { StringShowcase() }  // Example of DataStore of String
+
+                    // Example of DataStore of StringSet
+                    items(items = list.toList()) { savedString ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            shape = RoundedCornerShape(24.dp)
+                        ) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.titleLarge,
+                                text = savedString
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 sealed class SettingsData<T : Any>(
     internal open val settings: InternalDataStore,
@@ -13,7 +14,9 @@ sealed class SettingsData<T : Any>(
 ) {
     internal val currentValue by lazy { mutableStateOf(default) }
 
-    internal fun softReset() { currentValue.value = default }
+    internal fun softReset() {
+        currentValue.value = default
+    }
 
     fun reset() {
         val data = this
@@ -23,7 +26,9 @@ sealed class SettingsData<T : Any>(
 
     suspend fun resetAsync() {
         currentValue.value = default
-        settings.toDefaultValue(this)
+        withContext(Dispatchers.IO) {
+            settings.toDefaultValue(this@SettingsData)
+        }
     }
 }
 
@@ -146,6 +151,41 @@ data class FloatSettingsData(
     }
 }
 
+data class DoubleSettingsData(
+    override val settings: InternalDataStore,
+    override val key: String,
+    override val default: Double
+) : SettingsData<Double>(settings, key, default) {
+    fun read() = currentValue.value
+    fun readAsFlow(): Flow<Double> = settings.readAsFlow(this).mapNotNull { it as? Double }
+
+    init {
+        val data = this
+
+        runBlocking {
+            var k = settings.readValue(data)
+
+            if (k !is Double) {
+                settings.resetValueType(data)
+                k = settings.readValue(data)
+            }
+
+            currentValue.value = k as Double
+        }
+    }
+
+    fun update(value: Double) {
+        val data = this
+        currentValue.value = value
+        runBlocking(Dispatchers.IO) { settings.updateValue(data, value) }
+    }
+
+    suspend fun updateAsync(value: Double) {
+        currentValue.value = value
+        settings.updateValue(this, value)
+    }
+}
+
 data class StringSettingsData(
     override val settings: InternalDataStore,
     override val key: String,
@@ -211,6 +251,42 @@ data class LongSettingsData(
     }
 
     suspend fun updateAsync(value: Long) {
+        currentValue.value = value
+        settings.updateValue(this, value)
+    }
+}
+
+data class StringSetSettingsData(
+    override val settings: InternalDataStore,
+    override val key: String,
+    override val default: Set<String>
+) : SettingsData<Set<String>>(settings, key, default) {
+    fun read() = currentValue.value.toMutableSet()
+    fun readAsFlow(): Flow<Set<String>> =
+        settings.readAsFlow(this).mapNotNull { it.dataStoreToStringSet() }
+
+    init {
+        val data = this
+
+        runBlocking {
+            var k = settings.readValue(data)
+
+            if (k !is Set<*>) {
+                settings.resetValueType(data)
+                k = settings.readValue(data)
+            }
+
+            currentValue.value = k.dataStoreToStringSet()
+        }
+    }
+
+    fun update(value: Set<String>) {
+        val data = this
+        currentValue.value = value
+        runBlocking(Dispatchers.IO) { settings.updateValue(data, value) }
+    }
+
+    suspend fun updateAsync(value: Set<String>) {
         currentValue.value = value
         settings.updateValue(this, value)
     }

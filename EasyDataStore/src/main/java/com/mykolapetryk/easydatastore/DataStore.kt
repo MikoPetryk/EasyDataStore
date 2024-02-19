@@ -1,6 +1,5 @@
 package com.mykolapetryk.easydatastore
 
-import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -31,9 +30,25 @@ object DataStore {
         }
     }
 
+    operator fun invoke(key: DataStoreValue<Double>): DoubleSettingsData {
+        try {
+            return values[key.dataStoreName]?.fields?.get(key.key) as DoubleSettingsData
+        } catch (e: NullPointerException) {
+            throw NullPointerException("DataStore for \"${key.dataStoreName}\" was not initialized before using")
+        }
+    }
+
     operator fun invoke(key: DataStoreValue<String>): StringSettingsData {
         try {
             return values[key.dataStoreName]?.fields?.get(key.key) as StringSettingsData
+        } catch (e: NullPointerException) {
+            throw NullPointerException("DataStore for \"${key.dataStoreName}\" was not initialized before using")
+        }
+    }
+
+    operator fun invoke(key: DataStoreValue<Set<String>>): StringSetSettingsData {
+        try {
+            return values[key.dataStoreName]?.fields?.get(key.key) as StringSetSettingsData
         } catch (e: NullPointerException) {
             throw NullPointerException("DataStore for \"${key.dataStoreName}\" was not initialized before using")
         }

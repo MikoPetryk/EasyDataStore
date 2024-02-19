@@ -2,6 +2,8 @@ package com.mykolapetryk.simpleappsettings.presentation
 
 import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -15,14 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 
 @Composable
-fun RestartAppButton(
-    activity: Activity,
-    modifier: Modifier
-) {
+fun RestartAppButton(activity: Activity) {
     Button(
-        modifier = modifier
+        modifier = Modifier
             .padding(horizontal = 8.dp)
-            .fillMaxSize(),
+            .fillMaxWidth()
+            .height(56.dp),
         shape = RoundedCornerShape(16.dp),
         onClick = { restartApp(activity) },
         colors = ButtonColors(

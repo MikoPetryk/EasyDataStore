@@ -2,11 +2,13 @@ package com.mykolapetryk.easydatastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -23,10 +25,14 @@ class InternalDataStore(
 
                 is IntSettingsData -> preferences[intPreferencesKey(data.key)] = value as Int
                 is FloatSettingsData -> preferences[floatPreferencesKey(data.key)] = value as Float
+                is LongSettingsData -> preferences[longPreferencesKey(data.key)] = value as Long
+                is DoubleSettingsData -> preferences[doublePreferencesKey(data.key)] = value as Double
+
                 is StringSettingsData -> preferences[stringPreferencesKey(data.key)] =
                     value as String
 
-                is LongSettingsData -> preferences[longPreferencesKey(data.key)] = value as Long
+                is StringSetSettingsData -> preferences[stringSetPreferencesKey(data.key)] =
+                    value.toStringSet()
             }
         }
     }
@@ -49,6 +55,11 @@ class InternalDataStore(
 
                     is LongSettingsData ->
                         preferences[longPreferencesKey(data.key)] = data.default
+
+                    is StringSetSettingsData ->
+                        preferences[stringSetPreferencesKey(data.key)] = data.default
+
+                    is DoubleSettingsData -> preferences[doublePreferencesKey(data.key)] = data.default
                 }
             }
             return true
@@ -65,6 +76,8 @@ class InternalDataStore(
                 is FloatSettingsData -> preferences[floatPreferencesKey(data.key)]
                 is StringSettingsData -> preferences[stringPreferencesKey(data.key)]
                 is LongSettingsData -> preferences[longPreferencesKey(data.key)]
+                is StringSetSettingsData -> preferences[stringSetPreferencesKey(data.key)]
+                is DoubleSettingsData -> preferences[doublePreferencesKey(data.key)]
             }
         }.first() ?: data.default
 
@@ -75,7 +88,9 @@ class InternalDataStore(
                 is IntSettingsData -> preferences[intPreferencesKey(data.key)]
                 is FloatSettingsData -> preferences[floatPreferencesKey(data.key)]
                 is StringSettingsData -> preferences[stringPreferencesKey(data.key)]
-                is LongSettingsData -> longPreferencesKey(data.key)
+                is LongSettingsData -> preferences[longPreferencesKey(data.key)]
+                is StringSetSettingsData -> preferences[stringSetPreferencesKey(data.key)]
+                is DoubleSettingsData -> preferences[doublePreferencesKey(data.key)]
             } ?: data.default
         }
 
@@ -87,6 +102,8 @@ class InternalDataStore(
                 is FloatSettingsData -> floatPreferencesKey(data.key)
                 is StringSettingsData -> stringPreferencesKey(data.key)
                 is LongSettingsData -> longPreferencesKey(data.key)
+                is StringSetSettingsData -> stringSetPreferencesKey(data.key)
+                is DoubleSettingsData -> doublePreferencesKey(data.key)
             }
 
             preferences.remove(key)
@@ -98,3 +115,15 @@ class InternalDataStore(
         settings.forEach { data -> toDefaultValue(data) }
     }
 }
+
+internal fun Any.toStringSet(): Set<String> {
+    val list = (this as Set<*>)
+    if (list.isEmpty()) return emptySet()
+    return list.map { it.toString() }.toSet()
+}
+
+internal fun Any.dataStoreToStringSet() : Set<String> =
+    (this as? ArrayList<*>)?.mapNotNull { it.toString() }?.toSet()
+        ?: (this as Set<*>).mapNotNull { it.toString() }.toSet()
+
+internal fun Any.toStringList() = (this as List<*>).mapNotNull { it.toString() }

@@ -24,6 +24,7 @@ import kotlin.random.Random
 fun NumberShowcase() {
     val exampleInt = DataStore(Examples.intExample)
     val exampleLong = DataStore(Examples.longExample)
+    val exampleDouble = DataStore(Examples.doubleExample)
 
     Card(shape = RoundedCornerShape(24.dp)) {
         Column(
@@ -79,7 +80,35 @@ fun NumberShowcase() {
                         disabledContentColor = Color.Transparent
                     )
                 ) {
-                    Text(text = "Float")
+                    Text(text = "Randomize Float")
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    text = "Double - [${
+                        exampleDouble.read()
+                    }]"
+                )
+
+                Button(
+                    onClick = {
+                        exampleDouble.update(Random.nextDouble())
+                    },
+                    colors = ButtonColors(
+                        contentColor = MaterialTheme.colorScheme.primary,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        disabledContainerColor = Color.Transparent,
+                        disabledContentColor = Color.Transparent
+                    )
+                ) {
+                    Text(text = "Randomize Double")
                 }
             }
 
